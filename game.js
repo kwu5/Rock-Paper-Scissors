@@ -1,5 +1,4 @@
 
-//computer choice
 function getComputerChoice(){
     const computer_choice_number = Math.random();
     let computer_choice_str;
@@ -15,20 +14,18 @@ function getComputerChoice(){
 }
 
 
-//Read user input
 function getUserChoice(){
-    let isValid = false;
-    //count user input times, quit after inputing incorrect value 5 times 
+    let valid = false;
     let count = 0;
     let user_input;
-    while(!isValid){
+    while(!valid){
    
         user_input = prompt('Please enter your choice: \'Scissor\',\'Rock\' or \'Paper\'','Scissor');
         user_input = user_input.toUpperCase();
         console.log('User choice: '+ user_input);
         
         if(user_input == 'SCISSOR' || user_input=='ROCK' || user_input=='PAPER' || count == 5){
-            isValid = true;   
+            valid = true;   
         }else{
             alert('Not a valid input, please enter a valid input');
             count ++;
@@ -38,11 +35,9 @@ function getUserChoice(){
 }
 
 
-//Declare players scorce variable
 let humanScore=0 ;
 let computerScore = 0;
 
-//play a single round
 function playRound(){
     let humanChoice = getUserChoice();
     let computerChoice  = getComputerChoice();
@@ -69,7 +64,6 @@ function playRound(){
 }
 
 
-//play all rounds
 function playGame(){
     for(let i=0;i<5;i++){
         console.log('--------------------')
