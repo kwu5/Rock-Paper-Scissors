@@ -1,3 +1,6 @@
+let msg ='';
+let user_input;
+
 
 function getComputerChoice(){
     const computer_choice_number = Math.random();
@@ -9,7 +12,7 @@ function getComputerChoice(){
     }else{
         computer_choice_str = 'PAPER';
     }
-    console.log('Computer choice: ' + computer_choice_str);
+    msg+= ('Computer choice: ' + computer_choice_str + "\r\n");
     return computer_choice_str;
 }
 
@@ -17,12 +20,8 @@ function getComputerChoice(){
 function getUserChoice(){
     let valid = false;
     let count = 0;
-    let user_input;
     while(!valid){
-   
-        user_input = prompt('Please enter your choice: \'Scissor\',\'Rock\' or \'Paper\'','Scissor');
-        user_input = user_input.toUpperCase();
-        console.log('User choice: '+ user_input);
+        msg += 'User choice: '+ user_input+ '\r\n';
         
         if(user_input == 'SCISSOR' || user_input=='ROCK' || user_input=='PAPER' || count == 5){
             valid = true;   
@@ -57,20 +56,57 @@ function playRound(){
             else if(computerChoice == 'ROCK')  computerScore++;
             break;
         default:
-            console.log('I ask the computer to do wrong things')
-    } 
-    console.log(`Score now is : Human: ${humanScore}, computer: ${computerScore}`);
+            msg+= ('I ask the computer to do wrong things\r\n')
+   } 
+    msg+= (`Score now is : Human: ${humanScore}, computer: ${computerScore}\r\n`);
 
 }
 
+let container = document.querySelector("#container");
+let btn_rock = document.createElement("button");
+let btn_scissor = document.createElement("button");
+let btn_paper = document.createElement("button");
 
-function playGame(){
-    for(let i=0;i<5;i++){
-        console.log('--------------------')
-        console.log('Round: '+ i);
+
+let counter = 0;
+
+btn_rock.textContent = "ROCK";
+btn_rock.addEventListener("click", () => {
+    user_input = "ROCK";
+    playGame();
+})
+container.appendChild(btn_rock);
+
+btn_scissor.textContent = "SCISSOR";
+btn_scissor.addEventListener("click", () => {
+        user_input = "SCISSOR";
+        playGame();
+    })
+container.appendChild(btn_scissor);
+
+btn_paper.textContent = "PAPER";
+btn_paper.addEventListener("click", () => {
+        user_input = "PAPER";
+        playGame();
+    })
+container.appendChild(btn_paper);
+
+const playGame = ()=>{
+    let resultDisplay = document.createElement("div");
+    if(counter < 5){
+        msg = '';
         playRound();
-        console.log('--------------------')
-
+        counter ++;
+    }else{
+        if(humanScore == computerScore){
+            msg = "The game has ended in 5 rounds, no winner (same score)"
+        }else{
+            const winner = humanScore>computerScore ? 'Human': 'Computer';
+            msg = "The game has ended in 5 rounds, winner is :" + winner;
+        }
+   
     }
+    resultDisplay.setAttribute('style','white-space: pre');
+    resultDisplay.textContent = msg;
+    container.appendChild(resultDisplay);
 }
-playGame();
